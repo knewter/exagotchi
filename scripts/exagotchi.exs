@@ -29,6 +29,9 @@ defmodule UI do
     case String.strip(input) do
       "a" -> Exagotchi.Creature.age(pid)
       "f" -> Exagotchi.Creature.feed(pid)
+      _   ->
+        IO.puts "That's crazy talk and makes no sense, try again..."
+        handle_input(pid)
     end
   end
 
