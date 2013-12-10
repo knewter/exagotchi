@@ -14,6 +14,18 @@ defmodule Exagotchi.Creature do
     notify(pid, :feed)
   end
 
+  def age(pid) do
+    notify(pid, :age)
+  end
+
+  def alive?(pid) do
+    get_stats(pid)[:food_capacity] > 0
+  end
+
+  def dead?(pid) do
+    !alive?(pid)
+  end
+
   def get_stats(pid) do
     [
       food_capacity: FeedingComponent.get_capacity(pid),

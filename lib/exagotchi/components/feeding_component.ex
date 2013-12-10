@@ -12,8 +12,11 @@ defmodule Exagotchi.Components.FeedingComponent do
   def handle_event(:feed, feeding_capacity) do
     {:ok, feeding_capacity + 1}
   end
-  def handle_event(_, age) do
-    {:ok, age}
+  def handle_event(:age, feeding_capacity) do
+    {:ok, feeding_capacity - 1}
+  end
+  def handle_event(_, feeding_capacity) do
+    {:ok, feeding_capacity}
   end
 
   def handle_call(:get_capacity, feeding_capacity) do
