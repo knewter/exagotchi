@@ -39,4 +39,12 @@ defmodule ExagotchiTest do
     assert false == Exagotchi.Creature.alive?(meta[:creature])
     assert true == Exagotchi.Creature.dead?(meta[:creature])
   end
+
+  test "an exagotchi is hungry if its food capacity gets under 10", meta do
+    assert false == Exagotchi.Creature.hungry?(meta[:creature])
+    [food_capacity: original_food_capacity, age: _] = Exagotchi.Creature.get_stats(meta[:creature])
+    times_to_age_til_hunger = (-1 * (10 - original_food_capacity)) + 1
+    Enum.each((1..times_to_age_til_hunger), fn(_) -> Exagotchi.Creature.age(meta[:creature]) end)
+    assert true == Exagotchi.Creature.hungry?(meta[:creature])
+  end
 end

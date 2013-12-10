@@ -26,6 +26,10 @@ defmodule Exagotchi.Creature do
     !alive?(pid)
   end
 
+  def hungry?(pid) do
+    get_stats(pid)[:food_capacity] < 10
+  end
+
   def get_stats(pid) do
     [
       food_capacity: FeedingComponent.get_capacity(pid),
@@ -33,7 +37,12 @@ defmodule Exagotchi.Creature do
     ]
   end
 
+  ### Private bits...
+
   defp notify(pid, event) do
-    :gen_event.notify(pid, event)
+    case alive?(pid) do
+      true -> :gen_event.notify(pid, event)
+      false -> :cant_notify_too_dead
+    end
   end
 end
