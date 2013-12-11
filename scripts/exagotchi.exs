@@ -15,13 +15,15 @@ defmodule UI do
     IO.puts "What would you like to do?"
     IO.puts "a) age"
     IO.puts "f) feed"
+    IO.puts "p) play"
   end
 
   defp print_exagotchi_status(pid) do
     age = Exagotchi.Creature.get_stats(pid)[:age]
     hungry = Exagotchi.Creature.hungry?(pid)
+    sad = Exagotchi.Creature.sad?(pid)
     IO.puts "\n\n\n\n\n"
-    IO.puts "Age: #{age} | Hungry? #{hungry}"
+    IO.puts "Age: #{age} | Hungry? #{hungry} | Sad? #{sad}"
   end
 
   defp handle_input(pid) do
@@ -29,6 +31,7 @@ defmodule UI do
     case String.strip(input) do
       "a" -> Exagotchi.Creature.age(pid)
       "f" -> Exagotchi.Creature.feed(pid)
+      "p" -> Exagotchi.Creature.play(pid)
       _   ->
         IO.puts "That's crazy talk and makes no sense, try again..."
         handle_input(pid)
