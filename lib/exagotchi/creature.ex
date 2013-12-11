@@ -14,7 +14,6 @@ defmodule Exagotchi.Creature do
 
   def feed(pid) do
     notify(pid, :feed)
-    #notify(pid, :play)
   end
 
   def play(pid) do
