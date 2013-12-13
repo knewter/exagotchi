@@ -4,8 +4,11 @@ defmodule UI do
       true ->
         print_exagotchi_status(pid)
         print_message
-        handle_input(pid)
-        handler(pid)
+        case handle_input(pid) do
+          :ok -> handler(pid)
+          _   ->
+            IO.puts "exiting..."
+        end
       false ->
         print_death_message
     end
@@ -19,23 +22,36 @@ defmodule UI do
   end
 
   defp print_exagotchi_status(pid) do
-    age = Exagotchi.Creature.get_stats(pid)[:age]
+    age    = Exagotchi.Creature.get_stats(pid)[:age]
     hungry = Exagotchi.Creature.hungry?(pid)
-    sad = Exagotchi.Creature.sad?(pid)
+    sad    = Exagotchi.Creature.sad?(pid)
     IO.puts "\n\n\n\n\n"
     IO.puts "Age: #{age} | Hungry? #{hungry} | Sad? #{sad}"
   end
 
   defp handle_input(pid) do
-    input = IO.gets(:stdio, "> ")
+    IO.gets(:stdio, "> ") |> evaluate_input(pid)
+  end
+
+  defp evaluate_input(input, pid) when is_atom(input) do
+    case input do
+      :eof -> :exit
+      _    -> unknown_input(pid)
+    end
+  end
+  defp evaluate_input(input, pid) when is_binary(input) do
     case String.strip(input) do
       "a" -> Exagotchi.Creature.age(pid)
       "f" -> Exagotchi.Creature.feed(pid)
       "p" -> Exagotchi.Creature.play(pid)
-      _   ->
-        IO.puts "That's crazy talk and makes no sense, try again..."
-        handle_input(pid)
+      _   -> unknown_input(pid)
     end
+    :ok
+  end
+
+  defp unknown_input(pid) do
+    IO.puts "That's crazy talk and makes no sense, try again..."
+    handle_input(pid)
   end
 
   defp print_death_message do
