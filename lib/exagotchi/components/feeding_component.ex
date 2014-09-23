@@ -5,7 +5,7 @@ defmodule Exagotchi.Components.FeedingComponent do
   end
 
   ### GenEvent API
-  def init(feeding_capacity // 0) do
+  def init(feeding_capacity \\ 0) do
     { :ok, feeding_capacity }
   end
 

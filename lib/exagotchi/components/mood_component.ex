@@ -5,7 +5,7 @@ defmodule Exagotchi.Components.MoodComponent do
   end
 
   ### GenEvent API
-  def init(mood_capacity // 0) do
+  def init(mood_capacity \\ 0) do
     { :ok, mood_capacity }
   end
 
