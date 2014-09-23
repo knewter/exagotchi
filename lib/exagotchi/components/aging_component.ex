@@ -5,7 +5,7 @@ defmodule Exagotchi.Components.AgingComponent do
   end
 
   ### GenEvent API
-  def init(age // 0) do
+  def init(age \\ 0) do
     { :ok, age }
   end
 

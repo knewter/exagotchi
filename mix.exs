@@ -4,7 +4,7 @@ defmodule Exagotchi.Mixfile do
   def project do
     [ app: :exagotchi,
       version: "0.0.1",
-      elixir: "~> 0.11.3-dev",
+      elixir: "~> 1.0.0",
       deps: deps ]
   end
 
